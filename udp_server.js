@@ -2,16 +2,21 @@ var dgram = require('dgram');
 var socket = dgram.createSocket('udp4');
 
 var port = process.argv[2].replace( /^port=/g, '' );
-// var userSocket = process.argv[3].replace( /^socket=/g, '' );
 var address = process.argv[3].replace( /^address=/g, '' );
 
-// socket.bind(10000, function(){
-	//socket.address().address | port
-// });
+// this type works for all platform
+//socket.bind(10000, function(){
+//	console.log( socket );
+//});
 
-socket.bind({
-	port: port,
-	address: address
+// this type works on windows but not on ubuntu(linux)
+//socket.bind({ port: port, address: '127.0.0.1' }, function(){
+//	console.log( socket );
+//});
+
+// this type works on ubuntu(linux), not yet tested on windows
+socket.bind(10000, '127.0.0.1', function(){
+	console.log( socket );
 });
 
 /**
@@ -44,4 +49,26 @@ socket.on('error', function(err){
 	console.log(err);
 });
 
-//socket.close();
+
+/* success
+{
+	domain: null,
+	_events: {
+		message: [Function],
+		close: [Function],
+		error: [Function]
+	},
+	_maxListeners: 10,
+	_handle: {
+		fd: 9,
+		lookup: [Function: lookup4],
+		owner: [Circular],
+		onmessage: [Function: onMessage]
+	},
+	_receiving: true,
+	_bindState: 2,
+	type: 'udp4',
+	fd: -42
+}
+
+*/
