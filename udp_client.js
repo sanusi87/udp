@@ -1,16 +1,21 @@
 var dgram = require('dgram');
-
 var socket = dgram.createSocket('udp4');
 
-var i = 0;
-setInterval(function(){
+var port = process.argv[2].replace( /^port=/g, '' );
+var address = process.argv[3].replace( /^address=/g, '' );
+
+var i = 0,
+intv = setInterval(function(){
 	if( i == 3 ){
 		var message = new Buffer("STOP");
+		clearInterval( intv );
+		socket.close();
 	}else{
 		var message = new Buffer("SND");
 	}
 	
-	socket.send(message, 0, message.length, 10000, 'localhost', function(err){
+	console.log( 'sending msg to '+address+':'+port );
+	socket.send(message, 0, message.length, port, address, function(err){
 		console.log('client send err');
 		console.log(err);
 	});
