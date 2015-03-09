@@ -12,3 +12,7 @@ one the server has been started, you can then start the client, which is by typi
 ```javascript
 node udp_client.js
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sanusi87/udp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
